@@ -1,43 +1,26 @@
-/*
- * Copyright (c) 2016 Intel Corporation
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 #include <zephyr/kernel.h>
-#include <zephyr/drivers/gpio.h>
+#include <zephyr/device.h>
+#include <zephyr/drivers/sensor.h>
+#include "sensor/sps30/sps30.h"
 
-/* 1000 msec = 1 sec */
-#define SLEEP_TIME_MS   1000
+#if !DT_HAS_COMPAT_STATUS_OKAY(sensirion_sps30)
+#error "No sensirion,sps30 compatible node found in the device tree"
+#endif
+#include <zephyr/logging/log.h>
+LOG_MODULE_REGISTER(main);
 
-/* The devicetree node identifier for the "led0" alias. */
-#define LED0_NODE DT_ALIAS(led0)
-
-/*
- * A build error on this line means your board is unsupported.
- * See the sample documentation for information on how to fix this.
- */
-static const struct gpio_dt_spec led = GPIO_DT_SPEC_GET(LED0_NODE, gpios);
-
+const struct device *sps30 = DEVICE_DT_GET_ANY(sensirion_sps30);
 int main(void)
 {
-	int ret;
+    printk("Sensor name: %s\n", sps30->name);
+    printk("Sensor config: %s\n", sps30->config);
+    printk("Sensor api: %s\n", sps30->api);
+    printk("Sensor state: %p\n", sps30->state);
+    printk("Sensor data: %p\n", sps30->data);
 
-	if (!gpio_is_ready_dt(&led)) {
-		return 0;
+	if (!device_is_ready(sps30)) {
+		printk("SPS30 device not ready\n");
+		return 1;
 	}
-
-	ret = gpio_pin_configure_dt(&led, GPIO_OUTPUT_ACTIVE);
-	if (ret < 0) {
-		return 0;
-	}
-
-	while (1) {
-		ret = gpio_pin_toggle_dt(&led);
-		if (ret < 0) {
-			return 0;
-		}
-		k_msleep(SLEEP_TIME_MS);
-	}
-	return 0;
+	printk("SPS30 device is ready\n");
 }
