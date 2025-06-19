@@ -3,4 +3,4 @@ config SPS30
     default y
     help
       Enable the driver for the Sensirion SPS30 particulate matter sensor.
-      This driver allows you to interface with the SPS30 sensor over I2C and read particulate data.
+      This driver allows you to interface with the SPS30 sensor over I2C and read particulate data. 
