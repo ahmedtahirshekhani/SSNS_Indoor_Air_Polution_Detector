@@ -2,7 +2,7 @@
     status = "okay";
 	clock-frequency = <I2C_BITRATE_STANDARD>;
 
-    sps30:sps30@69 {
+    sps30@69 {
         status = "okay";
         compatible = "sensirion,sps30";
         reg = <0x69>;

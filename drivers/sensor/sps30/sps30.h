@@ -299,6 +299,14 @@ struct sps30_data
     float nc_10p0;
     float typical_particle_size;
 };
+#define SENSOR_CHAN_PM_4_0 (0x1000)
+#define SENSOR_CHAN_PM_0_5 (0x1001)
+#define SENSOR_CHAN_PM_1_0_NC (0x1002)
+#define SENSOR_CHAN_PM_2_5_NC (0x1003)
+#define SENSOR_CHAN_PM_4_0_NC (0x1004)
+#define SENSOR_CHAN_PM_10_NC (0x1005)
+#define SENSOR_CHAN_PM_TYPICAL_PARTICLE_SIZE (0x1006)
+
 
 #ifdef __cplusplus
 }
