@@ -160,5 +160,7 @@ struct cmds_t {
   * @return 0 if successful, negative errno code if failure.
   */
  int scd4x_factory_reset(const struct device *dev);
+ #define SENSOR_CHAN_CO2_SCD (0x1007)
+
 
 #endif /* ZEPHYR_DRIVERS_SENSOR_SCD4X_H_ */

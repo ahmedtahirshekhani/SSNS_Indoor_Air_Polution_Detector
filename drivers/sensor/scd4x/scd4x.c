@@ -596,7 +596,7 @@ static int scd4x_sample_fetch(const struct device *dev, enum sensor_channel chan
 	int ret;
 
 	if (chan != SENSOR_CHAN_ALL && chan != SENSOR_CHAN_AMBIENT_TEMP &&
-	    chan != SENSOR_CHAN_HUMIDITY && chan != SENSOR_CHAN_CO2) {
+	    chan != SENSOR_CHAN_HUMIDITY && chan != SENSOR_CHAN_CO2_SCD) {
 		return -ENOTSUP;
 	}
 
@@ -653,7 +653,7 @@ static int scd4x_channel_get(const struct device *dev, enum sensor_channel chan,
 	const struct scd4x_data *data = dev->data;
 	int64_t tmp_val;
 
-	switch ((enum sensor_channel)chan) {
+	switch (chan) {
 	case SENSOR_CHAN_AMBIENT_TEMP:
 		/*Calculation from Datasheet*/
 		tmp_val = data->temp_sample * SCD4X_MAX_TEMP;
@@ -666,7 +666,7 @@ static int scd4x_channel_get(const struct device *dev, enum sensor_channel chan,
 		val->val1 = (int32_t)(tmp_val / 0xFFFF);
 		val->val2 = ((tmp_val % 0xFFFF) * 1000000) / 0xFFFF;
 		break;
-	case SENSOR_CHAN_CO2:
+	case SENSOR_CHAN_CO2_SCD:
 		val->val1 = data->co2_sample;
 		val->val2 = 0;
 		break;
@@ -684,7 +684,7 @@ int scd4x_attr_set(const struct device *dev, enum sensor_channel chan, enum sens
 	
 
 	if (chan != SENSOR_CHAN_ALL && chan != SENSOR_CHAN_AMBIENT_TEMP &&
-	    chan != SENSOR_CHAN_HUMIDITY && chan != SENSOR_CHAN_CO2) {
+	    chan != SENSOR_CHAN_HUMIDITY && chan != SENSOR_CHAN_CO2_SCD) {
 		return -ENOTSUP;
 	}
 
@@ -790,7 +790,7 @@ static int scd4x_attr_get(const struct device *dev, enum sensor_channel chan,
 	int ret;
 
 	if (chan != SENSOR_CHAN_ALL && chan != SENSOR_CHAN_AMBIENT_TEMP &&
-	    chan != SENSOR_CHAN_HUMIDITY && chan != SENSOR_CHAN_CO2) {
+	    chan != SENSOR_CHAN_HUMIDITY && chan != SENSOR_CHAN_CO2_SCD) {
 		return -ENOTSUP;
 	}
 
